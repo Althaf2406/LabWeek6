@@ -7,7 +7,7 @@ import com.example.labweek6.ui.model.Activity
 import com.example.labweek6.ui.model.Teman
 import com.example.labweek6.ui.model.listAktivitas
 
-class Soal1ViewModel : ViewModel() {
+class Soal2ViewModel : ViewModel() {
     var user = mutableStateOf(
         Teman(
             nama = "Althaf",

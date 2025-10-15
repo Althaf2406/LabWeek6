@@ -1,0 +1,88 @@
+package com.example.labweek6.ui.view
+
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Text
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.labweek6.ui.model.listAktivitas
+import com.example.labweek6.ui.viewmodel.Soal2ViewModel
+import com.example.labweek6.ui.model.listTeman
+
+@Composable
+fun Soal2(
+    s1VM: Soal2ViewModel = viewModel(),
+    modifier: Modifier = Modifier,
+    navController: NavController = rememberNavController()
+) {
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState())
+    ) {
+        ProfileCard(prfl = s1VM.user.value)
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text("Friend Suggestion")
+        Spacer(modifier = Modifier.height(8.dp))
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            items(listTeman) { teman ->
+                FriendCard(
+                    tMN = teman,
+                    modifier = Modifier,
+                    onAddFriend = { s1VM.addFriend(it)}
+
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text("Workout List")
+        Spacer(modifier = Modifier.height(8.dp))
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            val activities = s1VM.activities
+
+            activities.forEach { akt ->
+                ExerciseCard(
+                    akt = akt,
+                    modifier = Modifier,
+                    onToggleClick = { s1VM.toggleActivity(it) }
+                )
+            }
+
+        }
+
+    }
+}
+
+@Composable
+@Preview(showBackground = true, showSystemUi = true)
+fun Soal2Preview() {
+    Soal2()
+}
