@@ -85,4 +85,5 @@ fun Soal2(
 @Preview(showBackground = true, showSystemUi = true)
 fun Soal2Preview() {
     Soal2()
+
 }

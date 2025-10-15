@@ -113,6 +113,7 @@ fun MyBottoNavigationBar(
     }
 }
 @Composable
+@Preview(showBackground = true, showSystemUi = true)
 fun Soal2AppRouting(){
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
