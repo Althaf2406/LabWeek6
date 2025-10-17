@@ -33,29 +33,15 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.SegmentedButtonDefaults.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import androidx.room.util.copy
 import com.example.labweek6.R
 import com.example.labweek6.ui.model.listProduk
-import com.example.labweek6.ui.viewmodel.Soal2ViewModel
-import com.example.labweek6.ui.model.listTeman
-import kotlin.collections.chunked
 import kotlin.collections.forEach
 
 @Composable
@@ -163,7 +149,8 @@ import kotlin.collections.forEach
             }
 
             Spacer(modifier = Modifier.height(8.dp))
-            // Popular Menu Header
+
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -177,16 +164,17 @@ import kotlin.collections.forEach
                 )
             }
 
+
             val rows = listProduk.chunked(2)
-            Column(
+            LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 24.dp)
             ) {
-                rows.forEach { pair ->
+                items(rows) { pair ->
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
                         modifier = Modifier
                             .fillMaxWidth()
                     ) {
@@ -198,7 +186,6 @@ import kotlin.collections.forEach
                                 pRDK = pRDK,
                             )
                         }
-
                         if (pair.size == 1) {
                             Spacer(modifier = Modifier.weight(1f))
                         }
