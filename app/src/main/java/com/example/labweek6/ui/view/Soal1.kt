@@ -37,6 +37,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -101,7 +102,7 @@ fun Soal1(
                 placeholder = { Text("What are you craving?") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color(0xFFD75AA3), shape = RoundedCornerShape(50.dp)),
+                    .background(Color(0xFFD75AA3), shape = RoundedCornerShape(100.dp)),
                 trailingIcon = {
                     Icon(
                         imageVector = Icons.Default.Search,
@@ -143,6 +144,7 @@ fun Soal1(
         }
 
         Spacer(Modifier.height(16.dp))
+
         Row(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier.fillMaxWidth()
@@ -157,6 +159,15 @@ fun Soal1(
                 ) {
                     Text("Food delivery")
                     Text("Delivery from 99 $")
+
+                    Spacer(Modifier.height(16.dp))
+
+                    Image(
+                        painter = painterResource(R.drawable.group_21),
+                        contentDescription = "Gambar Food Delivery",
+                        modifier = Modifier
+                            .size(200.dp)
+                    )
                 }
             }
             Card(
@@ -169,9 +180,37 @@ fun Soal1(
                 ) {
                     Text("Pandamart")
                     Text("New users $10 off")
+
+                    Spacer(Modifier.height(16.dp))
+
+                    Image(
+                        painter = painterResource(R.drawable.group_22),
+                        contentDescription = "Gambar Pandamart",
+                        modifier = Modifier
+                            .size(200.dp)
+                    )
                 }
             }
         }
+
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            "Restaurant Avaiable Now!!",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Image(
+            painter = painterResource(R.drawable._6c291cd055c5f81e78ab7999883f0dc80e3af41),
+            contentDescription = "Gambar Pizza",
+            modifier = Modifier
+                .size(700.dp)
+
+        )
+
     }
 }
 

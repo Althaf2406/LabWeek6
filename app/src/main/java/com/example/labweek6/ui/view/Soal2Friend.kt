@@ -26,7 +26,7 @@ import com.example.labweek6.ui.model.listTeman
 
 @Composable
 fun Soal2Friend(
-    s2VM: Soal2ViewModel = viewModel(), // shared ViewModel from NavHost
+    s2VM: Soal2ViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
     Column(
