@@ -44,7 +44,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import coil.size.Scale
-import com.example.labweek6.ui.model.listAktivitas
 import com.example.labweek6.ui.viewmodel.Soal2ViewModel
 import com.example.labweek6.ui.model.listTeman
 import com.example.labweek6.ui.view.Soal2

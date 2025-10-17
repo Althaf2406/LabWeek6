@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.labweek6.ui.model.Activity
 import com.example.labweek6.ui.model.Teman
-import com.example.labweek6.ui.model.listAktivitas
+
 
 class Soal2ViewModel : ViewModel() {
     var user = mutableStateOf(
@@ -20,22 +20,26 @@ class Soal2ViewModel : ViewModel() {
         )
     )
 
-    private val aCTV = mutableStateListOf<Activity>().apply {
-        addAll(listAktivitas)
-    }
-    val activities: List<Activity> = aCTV
-
-    fun toggleActivity(activity: Activity) {
-        val index = aCTV.indexOf(activity)
-        if (index != -1) {
-            aCTV[index] = aCTV[index].copy(
-                isActive = !aCTV[index].isActive
-            )
-            val activeCount = aCTV.count { it.isActive }
-            user.value = user.value.copy(jActivity = activeCount)
-        }
+     private val aCTV = mutableStateListOf<Activity>().apply {
     }
 
+    val aCTVPublic : List<Activity> = aCTV
+
+
+    fun addActivity(newActivity: Activity) {
+        aCTV.add(newActivity)
+        updateActivityCount()
+    }
+
+
+    fun removeActivity(activity: Activity) {
+        aCTV.remove(activity)
+        updateActivityCount()
+    }
+
+    private fun updateActivityCount() {
+        user.value = user.value.copy(jActivity = aCTV.size)
+    }
     fun addFriend(teman: Teman) {
         if (!teman.isFriend) {
             teman.isFriend = true

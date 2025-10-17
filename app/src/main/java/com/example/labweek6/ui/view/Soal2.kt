@@ -3,6 +3,7 @@ package com.example.labweek6.ui.view
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,18 +17,19 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.labweek6.ui.model.listAktivitas
 import com.example.labweek6.ui.viewmodel.Soal2ViewModel
 import com.example.labweek6.ui.model.listTeman
 
 @Composable
 fun Soal2(
-    s1VM: Soal2ViewModel = viewModel(),
+    s2VM: Soal2ViewModel = viewModel(),
     modifier: Modifier = Modifier,
     navController: NavController = rememberNavController()
 ) {
@@ -38,42 +40,74 @@ fun Soal2(
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        ProfileCard(prfl = s1VM.user.value)
+        ProfileCard(prfl = s2VM.user.value)
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text("Friend Suggestion")
+        Text("Recently Added")
         Spacer(modifier = Modifier.height(8.dp))
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        Column (
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
         ) {
-            items(listTeman) { teman ->
-                FriendCard(
-                    tMN = teman,
-                    modifier = Modifier,
-                    onAddFriend = { s1VM.addFriend(it)}
+            val temanYangSudahDitambah = listTeman.filter { it.isFriend }
 
-                )
+            Spacer(modifier = Modifier.height(8.dp))
+
+            if (temanYangSudahDitambah.isNotEmpty()) {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    temanYangSudahDitambah.forEach { teman ->
+                        FriendCard(
+                            tMN = teman,
+                            modifier = Modifier,
+                            onAddFriend = { s2VM.addFriend(it) }
+                        )
+                    }
+                }
+            } else {
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text("No Friends yet.", color = Color.Gray)
+                }
             }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text("Workout List")
+        Text("Recent Workouts")
         Spacer(modifier = Modifier.height(8.dp))
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            val activities = s1VM.activities
 
-            activities.forEach { akt ->
-                ExerciseCard(
-                    akt = akt,
-                    modifier = Modifier,
-                    onToggleClick = { s1VM.toggleActivity(it) }
-                )
+            Spacer(modifier = Modifier.height(8.dp))
+
+            if (s2VM.aCTVPublic.isNotEmpty()) {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    s2VM.aCTVPublic.forEach { akt ->
+                        ExerciseCard(
+                            akt = akt,
+                            modifier = Modifier,
+                            onToggleClick = { s2VM.removeActivity(it) }
+                        )
+                    }
+                }
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text("No Workouts yet", color = Color.Gray)
+                }
             }
 
         }
@@ -85,5 +119,4 @@ fun Soal2(
 @Preview(showBackground = true, showSystemUi = true)
 fun Soal2Preview() {
     Soal2()
-
 }

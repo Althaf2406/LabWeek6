@@ -13,14 +13,6 @@ data class Activity (
     val icon: ImageVector,
     val nama: String,
     val effect: String,
-    var isActive: Boolean
+    val calories: String,
 )
 
-val listAktivitas = mutableListOf(
-    Activity(Icons.Filled.DirectionsRun,"Cardio Blast", "Cardio", false, ),
-    Activity(Icons.Filled.SelfImprovement ,"Morning Yoga", "Flexibility", false),
-    Activity(Icons.Filled.SelfImprovement ,"Mindfulness Meditation", "Mindfulness", false),
-    Activity(Icons.Filled.RiceBowl  ,"Healthy Eating", "Nutrition", false, ),
-    Activity(Icons.Filled.FitnessCenter,"Strength Training", "Strength", false,),
-    Activity(Icons.Filled.DirectionsRun ,"Evening Run", "Cardio", false, ),
-)

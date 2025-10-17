@@ -29,7 +29,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.labweek6.ui.model.Activity
-import com.example.labweek6.ui.model.listAktivitas
 
 @Composable
 fun ExerciseCard(
@@ -68,7 +67,6 @@ fun ExerciseCard(
                 Text(akt.effect, fontSize = 14.sp, color = Color.Gray)
             }
         }
-        if (akt.isActive) {
             Icon(
                 imageVector = Icons.Default.Remove,
                 contentDescription = "Remove",
@@ -83,24 +81,7 @@ fun ExerciseCard(
                         onToggleClick(akt)
                     }
             )
-        }else {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = "Add",
-                tint = Color.White,
-                modifier = Modifier
-                    .size(28.dp)
-                    .background(
-                        Color.Blue,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        onToggleClick(akt)
-                    }
 
-            )
-
-        }
     }
 }
 
@@ -108,9 +89,14 @@ fun ExerciseCard(
 @Preview(showBackground = true)
 fun ExerciseCardPreview() {
     ExerciseCard(
-        akt = listAktivitas[0],
-        modifier = Modifier,
-        onToggleClick = {}
 
+        modifier = Modifier,
+        onToggleClick = {},
+        akt = Activity(
+            icon = Icons.Default.Add,
+            nama = "Running",
+            effect = "Cardio",
+            calories = "200",
+        )
     )
 }
