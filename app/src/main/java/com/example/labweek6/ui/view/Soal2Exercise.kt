@@ -62,9 +62,9 @@ fun Soal2Exercise(s2VM: Soal2ViewModel = viewModel()) {
                 if (s2VM.aCTVPublic.isEmpty()) {
                     Text("No Workouts Found", color = Color.Gray)
                 } else {
-                    s2VM.aCTVPublic.forEach { akt ->
+                    s2VM.aCTVPublic.forEach { aKT ->
                         ExerciseCard(
-                            akt = akt,
+                            aKT = aKT,
                             modifier = Modifier,
                             onToggleClick = { s2VM.removeActivity(it) }
                         )
@@ -72,7 +72,6 @@ fun Soal2Exercise(s2VM: Soal2ViewModel = viewModel()) {
                 }
             }
 
-            // FAB buat buka form
             FloatingActionButton(
                 onClick = { showForm = true },
                 modifier = Modifier

@@ -34,7 +34,7 @@ import com.example.labweek6.ui.model.Activity
 fun ExerciseCard(
     modifier: Modifier,
     onToggleClick: (Activity) -> Unit,
-    akt: Activity,
+    aKT: Activity,
 ) {
     Row(
         modifier = Modifier
@@ -55,19 +55,20 @@ fun ExerciseCard(
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    imageVector = akt.icon,
-                    contentDescription = akt.nama,
+                    imageVector = aKT.icon,
+                    contentDescription = aKT.nama,
                     tint = Color.Black,
                     modifier = Modifier.size(24.dp)
                 )
             }
             Spacer(modifier = Modifier.width(12.dp))
             Column {
-                Text(akt.nama, fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                Text(akt.effect, fontSize = 14.sp, color = Color.Gray)
+                Text(aKT.nama, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                Text(aKT.effect, fontSize = 14.sp, color = Color.Gray)
+                Text(aKT.calories, fontSize = 14.sp, color = Color.Gray)
             }
         }
-        if (!akt.isActivess) {
+        if (!aKT.isActivess) {
             Icon(
                 imageVector = Icons.Default.Remove,
                 contentDescription = "Remove",
@@ -79,7 +80,7 @@ fun ExerciseCard(
                         shape = CircleShape
                     )
                     .clickable {
-                        onToggleClick(akt)
+                        onToggleClick(aKT)
                     }
             )
         }
@@ -94,7 +95,7 @@ fun ExerciseCardPreview() {
 
         modifier = Modifier,
         onToggleClick = {},
-        akt = Activity(
+        aKT = Activity(
             icon = Icons.Default.Add,
             nama = "Running",
             effect = "Cardio",

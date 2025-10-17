@@ -19,7 +19,6 @@ class Soal2ViewModel : ViewModel() {
             jTeman = 0
         )
     )
-
      private val aCTV = mutableStateListOf<Activity>().apply {
     }
 
@@ -40,10 +39,16 @@ class Soal2ViewModel : ViewModel() {
     private fun updateActivityCount() {
         user.value = user.value.copy(jActivity = aCTV.size)
     }
+
     fun addFriend(teman: Teman) {
-        if (!teman.isFriend) {
             teman.isFriend = true
             user.value = user.value.copy(jTeman = user.value.jTeman + 1)
-        }
+
+    }
+
+    fun removeFriend(teman: Teman) {
+            teman.isFriend = false
+            user.value = user.value.copy(jTeman = user.value.jTeman - 1)
+
     }
 }

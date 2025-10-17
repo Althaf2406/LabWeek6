@@ -3,11 +3,12 @@ package com.example.labweek6.ui.model
 data class Teman (
     val nama: String,
     val umur: String,
-    var isFriend: Boolean,
+    var isFriend: Boolean = false,
     val tinggi: String,
     val berat: String,
     var jActivity: Int,
-    var jTeman: Int
+    var jTeman: Int,
+    var isActivess: Boolean = false
 )
 
 val listTeman = mutableListOf(

@@ -155,7 +155,7 @@ fun Soal2AppRouting(){
                 Soal2(s2VM = s2VM, navController = navController)
             }
             composable(route = Soal2AppView.Soal2Friend.name){
-//                Soal2Friend(s2VM = s2VM)
+                Soal2Friend(s2VM = s2VM)
             }
             composable(route = Soal2AppView.Soal2Exercise.name){
                 Soal2Exercise(s2VM = s2VM)

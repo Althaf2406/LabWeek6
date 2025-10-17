@@ -1,10 +1,12 @@
 package com.example.labweek6.ui.view
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import androidx.room.util.copy
 import com.example.labweek6.ui.viewmodel.Soal2ViewModel
 import com.example.labweek6.ui.model.listTeman
 
@@ -50,17 +53,24 @@ fun Soal2(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier
         ) {
-            val temanYangSudahDitambah = listTeman.filter { it.isFriend }
+            val tMN = listTeman.filter { it.isFriend == true }
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            if (temanYangSudahDitambah.isNotEmpty()) {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    temanYangSudahDitambah.forEach { teman ->
+            if (tMN.isNotEmpty()) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState())
+                ) {
+                    tMN.forEach { tMN ->
+                        val displayTMN = tMN.copy(isActivess = true)
                         FriendCard(
-                            tMN = teman,
+                            tMN = displayTMN,
                             modifier = Modifier,
-                            onAddFriend = { s2VM.addFriend(it) }
+                            addFriend = { s2VM.addFriend(it) },
+                            removeFriend = { s2VM.removeFriend(it) }
                         )
                     }
                 }
@@ -90,13 +100,17 @@ fun Soal2(
             Spacer(modifier = Modifier.height(8.dp))
 
             if (s2VM.aCTVPublic.isNotEmpty()) {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    s2VM.aCTVPublic.forEach { akt ->
-                        val displayAkt = akt.copy(isActivess = true)
+                Column (
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    s2VM.aCTVPublic.forEach { aKT ->
+                        val displayAKT = aKT.copy(isActivess = true)
                         ExerciseCard(
-                            akt = displayAkt,
+                            aKT = displayAKT,
                             modifier = Modifier,
-                            onToggleClick = { s2VM.removeActivity(akt) }
+                            onToggleClick = { s2VM.removeActivity(aKT) }
                         )
                     }
                 }
