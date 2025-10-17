@@ -62,30 +62,6 @@ data class BottomNavItem(val view: Soal2AppView, val label:String)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyTopAppBar(
-    currentView: Soal2AppView?,
-    canNavigateBack: Boolean,
-    navigateUp: () -> Unit,
-    modifier: Modifier = Modifier
-){
-    TopAppBar(
-        title = { Text(currentView?.title ?: "") },
-        modifier = modifier,
-        navigationIcon = {
-            if (canNavigateBack) {
-                IconButton(onClick = navigateUp) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = "Back"
-                    )
-                }
-            }
-        }
-
-    )
-}
-
-@Composable
 fun MyBottoNavigationBar(
     navController: NavHostController,
     currentDestination: NavDestination?,
@@ -129,11 +105,6 @@ fun Soal2AppRouting(){
 
     Scaffold (
         topBar = {
-            MyTopAppBar(
-                currentView = currentView,
-                canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = { navController.navigateUp() }
-            )
         },
 
         bottomBar = {

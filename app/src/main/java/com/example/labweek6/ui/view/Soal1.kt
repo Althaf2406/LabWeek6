@@ -49,10 +49,16 @@ import androidx.room.util.copy
 import com.example.labweek6.R
 import com.example.labweek6.ui.viewmodel.Soal2ViewModel
 import com.example.labweek6.ui.model.listTeman
+import com.example.labweek6.ui.routes.Soal1AppView
+import com.example.labweek6.ui.viewmodel.Soal1ViewModel
 
 @Composable
 fun Soal1(
+    s1VM: Soal1ViewModel = viewModel(),
+    modifier: Modifier = Modifier,
+    navController: NavController = rememberNavController()
 ) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -111,8 +117,7 @@ fun Soal1(
                     )
                 },
             )
-
-            // Tabs (Restaurants, Deals, Track Order)
+            
             Row(
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                 modifier = Modifier.fillMaxWidth()
@@ -150,7 +155,11 @@ fun Soal1(
             modifier = Modifier.fillMaxWidth()
         ) {
             Card(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable {
+                        navController.navigate("Soal1FoodDelivery")
+                               },
                 colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
                 Column(
@@ -171,7 +180,11 @@ fun Soal1(
                 }
             }
             Card(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable {
+                        navController.navigate("Soal1Pandamart")
+                               },
                 colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
                 Column(

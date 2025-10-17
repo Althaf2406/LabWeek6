@@ -2,12 +2,9 @@ package com.example.labweek6.ui.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,11 +16,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Notifications
@@ -40,17 +34,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.labweek6.R
 import com.example.labweek6.ui.model.listProduk
+import com.example.labweek6.ui.viewmodel.Soal1ViewModel
 import kotlin.collections.forEach
 
 @Composable
-    fun Soal1FoodDelivery() {
+    fun Soal1FoodDelivery(
+    s1VM: Soal1ViewModel = viewModel(),
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color(0xFFF2F2F2))
-                .padding(16.dp),
+                .padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             // Header Text + Panda Image
@@ -71,45 +69,48 @@ import kotlin.collections.forEach
                 )
             }
 
-            // Search Bar
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(30.dp))
-                    .background(Color(0xFFD75AA3))
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Row(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(30.dp))
+                        .background(Color(0xFFD75AA3))
+                        .size(width = 320.dp, height = 50.dp)
+                        .padding(bottom = 16.dp, top = 16.dp, start = 16.dp, end = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "Search",
+                            tint = Color.White
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Text(
+                            "Search for Food",
+                            color = Color.White,
+                        )
+                    }
+
                     Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "Search",
+                        imageVector = Icons.Default.MoreVert,
+                        contentDescription = "Filter",
                         tint = Color.White
                     )
-                    Spacer(Modifier.width(8.dp))
-                    Text(
-                        "Search for Food",
-                        color = Color.White,
-                    )
                 }
-
                 Icon(
-                    imageVector = Icons.Default.MoreVert, // bisa diganti dengan filter icon
-                    contentDescription = "Filter",
-                    tint = Color.White
+                    imageVector = Icons.Default.Notifications,
+                    contentDescription = "Notifications",
+                    tint = Color(0xFFD75AA3),
                 )
             }
 
-            // Notification Icon
-            Icon(
-                imageVector = Icons.Default.Notifications,
-                contentDescription = "Notifications",
-                tint = Color(0xFFD75AA3),
-                modifier = Modifier.align(Alignment.End)
-            )
 
-            // Special Deal Card
+
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(containerColor = Color(0xFFD75AA3)),
@@ -165,7 +166,9 @@ import kotlin.collections.forEach
             }
 
 
-            val rows = listProduk.chunked(2)
+            val rows = listProduk
+                .filter { it.isFood && !it.isVege }
+                .chunked(2)
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 modifier = Modifier

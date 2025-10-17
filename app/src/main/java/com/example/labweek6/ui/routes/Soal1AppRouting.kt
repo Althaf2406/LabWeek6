@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.LocalFireDepartment
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,11 +30,14 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -47,16 +51,18 @@ import coil.size.Scale
 import com.example.labweek6.ui.viewmodel.Soal2ViewModel
 import com.example.labweek6.ui.model.listTeman
 import com.example.labweek6.ui.view.Soal1
+import com.example.labweek6.ui.view.Soal1FoodDelivery
+import com.example.labweek6.ui.view.Soal1Pandamart
 import com.example.labweek6.ui.view.Soal2
 import com.example.labweek6.ui.view.Soal2Exercise
 import com.example.labweek6.ui.view.Soal2Friend
 import com.example.labweek6.ui.viewmodel.Soal1ViewModel
 
-enum class Soal1AppView(val title: String, val icon: ImageVector? = null) {
-    Soal1("Soal1", Icons.Default.AccountCircle)
-
+enum class Soal1AppView(val title: String) {
+    Soal1("Soal1"),
+    Soal1Pandamart("Soal1Pandamart"),
+    Soal1FoodDelivery("Soal1FoodDelivery")
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,58 +71,75 @@ fun MyTopAppBar(
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
     modifier: Modifier = Modifier
-){
+) {
     TopAppBar(
-        title = { Text(currentView?.title ?: "") },
-        modifier = modifier,
+        title = {
+            Text(
+                text = currentView?.title ?: "",
+                color = Color.White,
+                fontSize = 20.sp
+            )
+        },
         navigationIcon = {
             if (canNavigateBack) {
                 IconButton(onClick = navigateUp) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = "Back"
+                        contentDescription = "Back",
+                        tint = Color.White
                     )
                 }
             }
-        }
-
+        },
+        actions = {
+            IconButton(onClick = {}) {
+                Icon(
+                    imageVector = Icons.Filled.ShoppingCart,
+                    contentDescription = "Cart",
+                    tint = Color.White
+                )
+            }
+        },
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = Color(0xFFD81B60) // warna magenta
+        ),
+        modifier = modifier
     )
 }
 
-
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
-fun Soal1AppRouting(){
+fun Soal1AppRouting() {
     val navController = rememberNavController()
     val s1VM: Soal1ViewModel = viewModel()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     val currentRoute = currentDestination?.route
-    val currentView = Soal2AppView.entries.find { it.name == currentRoute  }
+    val currentView = Soal1AppView.entries.find { it.name == currentRoute }
 
-
-    Scaffold (
+    Scaffold(
         topBar = {
             MyTopAppBar(
-                currentView = currentView,
+                currentView = currentView ?: Soal1AppView.Soal1,
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() }
             )
         },
-
-    ){
-            innerPadding ->
+    ) { innerPadding ->
         NavHost(
             modifier = Modifier.padding(innerPadding),
             navController = navController,
             startDestination = Soal1AppView.Soal1.name
-
-        ){
-            composable(route = Soal1AppView.Soal1.name){
-//                Soal1(s1VM = s1VM, navController = navController)
+        ) {
+            composable(route = Soal1AppView.Soal1.name) {
+                Soal1(s1VM = s1VM, navController = navController)
             }
+            composable(route = Soal1AppView.Soal1Pandamart.name) {
+                Soal1Pandamart(s1VM = s1VM)
+            }
+            composable(route = Soal1AppView.Soal1FoodDelivery.name) {
+                Soal1FoodDelivery(s1VM = s1VM)
+                }
         }
-
     }
-
 }

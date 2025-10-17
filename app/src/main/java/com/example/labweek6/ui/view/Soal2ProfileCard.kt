@@ -99,7 +99,6 @@ fun ProfileCard(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                // Kalori icon
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -111,7 +110,6 @@ fun ProfileCard(
                     )
                 }
 
-                // Friends icon
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {

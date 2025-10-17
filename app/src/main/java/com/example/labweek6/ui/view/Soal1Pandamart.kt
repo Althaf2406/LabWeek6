@@ -2,8 +2,6 @@ package com.example.labweek6.ui.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
@@ -17,45 +15,35 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.SegmentedButtonDefaults.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import androidx.room.util.copy
 import com.example.labweek6.R
-import com.example.labweek6.ui.viewmodel.Soal2ViewModel
-import com.example.labweek6.ui.model.listTeman
+import com.example.labweek6.ui.model.listProduk
+import com.example.labweek6.ui.viewmodel.Soal1ViewModel
+import kotlin.collections.chunked
+import kotlin.collections.forEach
 
 @Composable
-fun Soal1Pandamart() {
+fun Soal1Pandamart(
+    s1VM: Soal1ViewModel = viewModel(),
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -105,7 +93,103 @@ fun Soal1Pandamart() {
                 Text("View More", color = Color(0xFFC64B8F))
             }
 
+            Spacer(modifier = Modifier.height(16.dp))
 
+            val rows = listProduk
+                .filter { !it.isFood && it.isVege }
+                .chunked(2)
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+            ) {
+                items(rows) { pair ->
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        pair.forEach { pRDK ->
+                            ProdukCard(
+                                modifier = Modifier
+                                    .wrapContentHeight()
+                                    .weight(1f),
+                                pRDK = pRDK,
+                            )
+                        }
+                        if (pair.size == 1) {
+                            Spacer(modifier = Modifier.weight(1f))
+                        }
+                    }
+                }
+            }
+
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(300.dp)
+                .clip(RoundedCornerShape(16.dp))
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(R.drawable._3ce81b227e955ca1a2ebef66188dbfd672174f6), // ganti dgn gambar kamu
+                contentDescription = "Promo Background",
+                modifier = Modifier
+                    .clip(RoundedCornerShape(50.dp))
+                    .size(2000.dp)
+            )
+
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .fillMaxWidth()
+                    .padding(bottom = 50.dp, start = 75.dp, end = 150.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "20% off on your first purchase",
+                    style = TextStyle(
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .width(20.dp)
+                            .height(3.dp)
+                            .clip(RoundedCornerShape(50))
+                            .background(Color(0xFF00C853)) // hijau
+                    )
+
+                    Spacer(modifier = Modifier.width(6.dp))
+
+                    repeat(3) {
+                        Box(
+                            modifier = Modifier
+                                .size(6.dp)
+                                .clip(CircleShape)
+                                .background(Color.LightGray)
+                        )
+                        if (it != 2) Spacer(modifier = Modifier.width(6.dp))
+                    }
+                }
+            }
         }
     }
 }
