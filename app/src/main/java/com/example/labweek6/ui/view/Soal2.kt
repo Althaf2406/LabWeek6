@@ -92,10 +92,11 @@ fun Soal2(
             if (s2VM.aCTVPublic.isNotEmpty()) {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     s2VM.aCTVPublic.forEach { akt ->
+                        val displayAkt = akt.copy(isActivess = true)
                         ExerciseCard(
-                            akt = akt,
+                            akt = displayAkt,
                             modifier = Modifier,
-                            onToggleClick = { s2VM.removeActivity(it) }
+                            onToggleClick = { s2VM.removeActivity(akt) }
                         )
                     }
                 }

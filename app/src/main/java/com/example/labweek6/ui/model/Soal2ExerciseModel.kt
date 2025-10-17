@@ -14,5 +14,6 @@ data class Activity (
     val nama: String,
     val effect: String,
     val calories: String,
+    val isActivess: Boolean = false
 )
 

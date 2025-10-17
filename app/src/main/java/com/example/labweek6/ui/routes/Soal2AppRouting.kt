@@ -115,6 +115,7 @@ fun MyBottoNavigationBar(
 @Preview(showBackground = true, showSystemUi = true)
 fun Soal2AppRouting(){
     val navController = rememberNavController()
+    val s2VM: Soal2ViewModel = viewModel()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     val currentRoute = currentDestination?.route
@@ -151,13 +152,13 @@ fun Soal2AppRouting(){
 
         ){
             composable(route = Soal2AppView.Soal2.name){
-                Soal2(navController = rememberNavController())
+                Soal2(s2VM = s2VM, navController = navController)
             }
             composable(route = Soal2AppView.Soal2Friend.name){
-                Soal2Friend()
+//                Soal2Friend(s2VM = s2VM)
             }
             composable(route = Soal2AppView.Soal2Exercise.name){
-                Soal2Exercise()
+                Soal2Exercise(s2VM = s2VM)
             }
         }
 

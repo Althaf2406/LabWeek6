@@ -67,6 +67,7 @@ fun ExerciseCard(
                 Text(akt.effect, fontSize = 14.sp, color = Color.Gray)
             }
         }
+        if (!akt.isActivess) {
             Icon(
                 imageVector = Icons.Default.Remove,
                 contentDescription = "Remove",
@@ -81,6 +82,7 @@ fun ExerciseCard(
                         onToggleClick(akt)
                     }
             )
+        }
 
     }
 }
